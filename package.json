@@ -1,0 +1,16 @@
+{
+  "name": "mediflow",
+  "version": "1.0.0",
+  "description": "AI-powered medical form digitization platform with OCR, clinical validation, FHIR compliance, and universal EHR integration",
+  "main": "index.js",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["ocr", "medical", "healthcare", "fhir", "digitization"],
+  "author": "Arghya Gain",
+  "license": "MIT"
+}

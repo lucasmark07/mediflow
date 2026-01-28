@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mediflow-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - NODE_ENV=development
+    volumes:
+      - ./backend/src:/app/src
+    networks:
+      - mediflow-network
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mediflow-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - mediflow-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    container_name: mediflow-db
+    environment:
+      POSTGRES_USER: mediflow
+      POSTGRES_PASSWORD: mediflow_dev
+      POSTGRES_DB: mediflow_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mediflow-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  mediflow-network:
+    driver: bridge
